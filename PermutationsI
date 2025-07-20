@@ -1,0 +1,57 @@
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+Example 1:
+Input: nums = [1,2,3]
+Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+
+SOLUTION : 
+class Solution {
+    public void recursivePermuteI(int[] nums, List<List<Integer>> ansList, boolean[] vector, ArrayList<Integer> ds){
+        if(ds.size() == nums.length){
+            ansList.add(new ArrayList<>(ds));
+            return;
+        }
+        for(int i=0;i<nums.length;i++){
+            if(vector[i] == false){
+                vector[i] = true;
+                ds.add(nums[i]);
+                recursivePermuteI(nums,ansList,vector,ds);
+                ds.remove(ds.size()-1);
+                vector[i] = false;
+            }
+        }
+    }
+    public void swap(int n1,int n2,int[] nums){
+        int temp = nums[n1];
+        nums[n1] = nums[n2];
+        nums[n2] = temp;
+    }
+    public void recursivePermuteII(int ind,int[] nums,List<List<Integer>> ansList){
+        if(ind == nums.length){
+            ArrayList<Integer> outputArray = new ArrayList<Integer>();
+            for(int n : nums){
+                outputArray.add(n);
+            }
+            ansList.add(new ArrayList<>(outputArray));
+            return;
+        }
+        for(int i = ind;i<nums.length;i++){
+            swap(i,ind,nums);
+            recursivePermuteII(ind+1,nums,ansList);
+            swap(i,ind,nums);
+        }
+    }
+    public List<List<Integer>> permute(int[] nums) {
+        //1.BRUTE FORCE
+        boolean[] vector = new boolean[nums.length];
+        List<List<Integer>> ansList = new ArrayList<>();
+        ArrayList<Integer> ds = new ArrayList<Integer>();
+        recursivePermute(nums, ansList,vector,ds);
+        return ansList;
+        //2.OPTIMAL SOLUTION
+        int ind = 0;
+        List<List<Integer>> ansList = new ArrayList<>();
+        recursivePermuteII(ind,nums,ansList);
+        return ansList;
+        
+    }
+}
