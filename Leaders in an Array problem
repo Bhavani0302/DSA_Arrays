@@ -1,0 +1,47 @@
+public class Main
+{
+	public static void main(String[] args) {
+		
+		int[] nums = new int[]{10, 22, 12, 3, 0, 6};
+		//BRUTE Force
+		for(int i=0;i<nums.length;i++){
+		    int flag=0;
+		    for(int j=i+1;j<nums.length;j++){
+		        if(nums[i]>nums[j]){
+		            continue;
+		        }else{
+		            flag = 1;
+		            break;
+		        }
+		    }
+		    if(flag == 0){
+		        System.out.println(nums[i]);
+		    }
+		}
+		//OPTIMAL
+		int i=0;
+		int j=i+1;
+		while(i<nums.length-1){
+		    if(j==nums.length-1){
+		        System.out.println(nums[i]);
+		        i=i+1;
+		        j=i+1;
+		    }
+		    if(nums[i]>nums[j] ){
+		        j++;
+		    }
+		    else{
+		        i++;
+		        j=i+1;
+		    }
+		}
+		//OPTIMAL APPROACH -2
+		int max = Integer.MIN_VALUE;
+		for(int i = nums.length-1;i>=0;i--){
+		    if(nums[i]>max){
+		        System.out.println(nums[i]);
+		        max = nums[i];
+		    }
+		}
+	}
+}
